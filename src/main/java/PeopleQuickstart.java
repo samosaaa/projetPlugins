@@ -19,8 +19,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.security.GeneralSecurityException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class PeopleQuickstart {
   private static final String APPLICATION_NAME = "Google People API Java Quickstart";
@@ -60,6 +63,58 @@ public class PeopleQuickstart {
     LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(8888).build();
     return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
   }
+
+public static List<Person> getConnections() throws GeneralSecurityException, IOException{
+  final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+    PeopleService service =
+        new PeopleService.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
+            .setApplicationName(APPLICATION_NAME)
+            .build();
+    ListConnectionsResponse response = service.people().connections()
+        .list("people/me")
+        .setPageSize(10)
+        .setPersonFields("names,emailAddresses")
+        .execute();
+    List<Person> connections = response.getConnections();
+    return connections;
+}
+
+public static Person compareNames(String input) throws GeneralSecurityException, IOException{
+
+  List<Person> connections = getConnections();
+
+  String[] ContactRequest = input.split(" ");
+  for(int i = 0; i < ContactRequest.length; i++){
+    for(Person contact : connections){
+      if(ContactRequest[i].equals(contact.getResourceName())){
+        return contact;
+      }
+    }
+  }
+  return null;
+}
+
+public static boolean matchContact(String input) throws GeneralSecurityException, IOException{
+  Pattern regexContact = Pattern.compile("\\b(né|habite|naissance|âge)\\b", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE |  Pattern.CANON_EQ);
+  Matcher matchContact = regexContact.matcher("(?iu)" + input);
+  if (matchContact.find()) {
+      return true;
+  }else {
+      return false;
+  }
+}
+
+public static void answerContactRequest(String input) throws GeneralSecurityException, IOException{
+  Person contact = compareNames(input);
+  Pattern regexAgeContact = Pattern.compile("\\b(né|naissance|âge)\\b", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE |  Pattern.CANON_EQ);
+  Matcher matchAgeContact = regexAgeContact.matcher("(?iu)" + input);
+  if (matchAgeContact.find() && contact != null) {
+    System.out.println(contact + "est né.e le " + contact.getBirthdays());
+  }
+  else{
+    System.out.println("pb");
+  }
+}
 
   public static void main(String... args) throws IOException, GeneralSecurityException {
     // Build a new authorized API client service.
