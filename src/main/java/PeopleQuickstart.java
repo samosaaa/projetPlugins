@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.security.GeneralSecurityException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -86,7 +85,7 @@ public static Person compareNames(String input) throws GeneralSecurityException,
   String[] ContactRequest = input.split(" ");
   for(int i = 0; i < ContactRequest.length; i++){
     for(Person contact : connections){
-      if(ContactRequest[i].equals(contact.getResourceName())){
+      if(ContactRequest[i].equals(contact.getNames().get(0).getDisplayName())){
         return contact;
       }
     }
@@ -95,7 +94,7 @@ public static Person compareNames(String input) throws GeneralSecurityException,
 }
 
 public static boolean matchContact(String input) throws GeneralSecurityException, IOException{
-  Pattern regexContact = Pattern.compile("\\b(né|habite|naissance|âge)\\b", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE |  Pattern.CANON_EQ);
+  Pattern regexContact = Pattern.compile("\\b(|né|naissance|âge|age|née|nee|Mail|Email|Mèl|Mel)\\b", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE |  Pattern.CANON_EQ);
   Matcher matchContact = regexContact.matcher("(?iu)" + input);
   if (matchContact.find()) {
       return true;
@@ -106,13 +105,28 @@ public static boolean matchContact(String input) throws GeneralSecurityException
 
 public static void answerContactRequest(String input) throws GeneralSecurityException, IOException{
   Person contact = compareNames(input);
-  Pattern regexAgeContact = Pattern.compile("\\b(né|naissance|âge)\\b", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE |  Pattern.CANON_EQ);
+  if(contact == null){
+    System.out.println("Je n'ai pas trouvé le contact dont vous parlez.");
+    return;
+  }
+  //anniversaire
+  Pattern regexAgeContact = Pattern.compile("\\b(né|naissance|âge|age|née|nee)\\b", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE |  Pattern.CANON_EQ);
   Matcher matchAgeContact = regexAgeContact.matcher("(?iu)" + input);
-  if (matchAgeContact.find() && contact != null) {
-    System.out.println(contact + "est né.e le " + contact.getBirthdays());
+  if (matchAgeContact.find() && contact.getBirthdays() != null ) {
+    System.out.println(contact.getNames().get(0).getDisplayName() + " est né.e le " + contact.getBirthdays());
   }
   else{
-    System.out.println("pb");
+    System.out.println("La date de naissance de " + contact.getNames().get(0).getDisplayName() + " n'est pas renseignée.");
+  }
+
+  //email
+  Pattern regexMailContact = Pattern.compile("\\b(Mail|Email|Mèl|Mel)\\b", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE |  Pattern.CANON_EQ);
+  Matcher matchMailContact = regexMailContact.matcher("(?iu)" + input);
+  if (matchMailContact.find() && contact.getEmailAddresses() != null ) {
+    System.out.println("L\'adresse Email de " + contact.getNames().get(0).getDisplayName() + " est " + contact.getEmailAddresses().get(0).getValue());
+  }
+  else{
+    System.out.println("L\'adresse Email de " + contact.getNames().get(0).getDisplayName() + " n'est pas renseignée.");
   }
 }
 
