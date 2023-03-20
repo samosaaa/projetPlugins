@@ -72,7 +72,7 @@ public static List<Person> getConnections() throws GeneralSecurityException, IOE
     ListConnectionsResponse response = service.people().connections()
         .list("people/me")
         .setPageSize(10)
-        .setPersonFields("names,emailAddresses")
+        .setPersonFields("names,emailAddresses,birthdays,phoneNumbers,addresses")
         .execute();
     List<Person> connections = response.getConnections();
     return connections;
@@ -110,7 +110,6 @@ public static void answerContactRequest(String input) throws GeneralSecurityExce
     System.out.println("Je n'ai pas trouvé le contact dont vous parlez.");
     return;
   }
-  //anniversaire
   Pattern regexAgeContact = Pattern.compile("\\b(né|naissance|âge|age|née|nee)\\b", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE |  Pattern.CANON_EQ);
   Matcher matchAgeContact = regexAgeContact.matcher("(?iu)" + input);
   Pattern regexMailContact = Pattern.compile("\\b(Mail|Email|Mèl|Mel)\\b", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE |  Pattern.CANON_EQ);
@@ -121,7 +120,7 @@ public static void answerContactRequest(String input) throws GeneralSecurityExce
   Matcher matchAdressContact = regexAdressContact.matcher("(?iu)" + input);
   if (matchAgeContact.find()) {
     if(contact.getBirthdays() != null ){
-      System.out.println(contact.getNames().get(0).getDisplayName() + " est né.e le " + contact.getBirthdays());
+      System.out.println(contact.getNames().get(0).getDisplayName() + " est né.e le " + contact.getBirthdays().get(0).getText());
     }
     else{
       System.out.println("La date de naissance de " + contact.getNames().get(0).getDisplayName() + " n'est pas renseignée.");
@@ -145,7 +144,7 @@ public static void answerContactRequest(String input) throws GeneralSecurityExce
   }
   else if(matchAdressContact.find()){
     if(contact.getAddresses() != null){
-      System.out.println("L\'adresse de " + contact.getNames().get(0).getDisplayName() + " est " + contact.getAddresses().get(0));
+      System.out.println("L\'adresse de " + contact.getNames().get(0).getDisplayName() + " est " + contact.getAddresses().get(0).getFormattedValue());
     }
     else{
       System.out.println("L\'adresse de " + contact.getNames().get(0).getDisplayName() + " n'est pas renseignée.");
