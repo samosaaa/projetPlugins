@@ -5,15 +5,16 @@ import java.util.Scanner;
 public class Main{
 
     public static void findPlugin() throws GeneralSecurityException, IOException{
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Comment puis-je vous aider ? ");
-        String input = sc.nextLine();
-        //switch à la place ?
-        if(PeopleQuickstart.matchContact(input) == true){
-            PeopleQuickstart.answerContactRequest(input);
-        }
-        else{
-            System.out.println("Désolée mais je n'ai pas compris, merci de reformuler votre demande.");
+        try (Scanner sc = new Scanner(System.in)) {
+            System.out.println("Comment puis-je vous aider ? ");
+            String input = sc.nextLine();
+            //switch à la place ?
+            if(PeopleQuickstart.matchContact(input) == true){
+                PeopleQuickstart.answerContactRequest(input);
+            }
+            else{
+                System.out.println("Désolée mais je n'ai pas compris, merci de reformuler votre demande.");
+            }
         }
     }
     
