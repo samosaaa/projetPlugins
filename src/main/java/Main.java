@@ -8,15 +8,28 @@ public class Main{
         try (Scanner sc = new Scanner(System.in)) {
             System.out.println("Comment puis-je vous aider ? ");
             String input = sc.nextLine();
-            //switch à la place ?
-            if(PeopleQuickstart.matchContact(input) == true){
-                PeopleQuickstart.answerContactRequest(input);
+
+            if (PeopleQuickstart.isContact(input) == true){ // verifie s'il s'agit d'une question de COntact
+                if(PeopleQuickstart.matchNumber(input) == true){
+                    PeopleQuickstart.answerContactNumberRequest(input);
+                }
+                else if(PeopleQuickstart.matchBirthdate(input) == true){
+                    PeopleQuickstart.answerContactBirthdateRequest(input);
+                }
+                else if(PeopleQuickstart.matchEmail(input) == true){
+                    PeopleQuickstart.answerContactEmailRequest(input);
+                }
+                else  {
+                    if(PeopleQuickstart.matchAdress(input) == true){
+                        PeopleQuickstart.answerContactAdressRequest(input);
+                    }
+                } 
             }
             else{
                 System.out.println("Désolée mais je n'ai pas compris, merci de reformuler votre demande.");
             }
         }
-    }
+    }//modifier avec : matchNum/matchEmail/ etc
     
 
     public static void main(String[] args) throws GeneralSecurityException, IOException{
