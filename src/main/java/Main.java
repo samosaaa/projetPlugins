@@ -29,7 +29,6 @@ public class Main{
                 System.out.println("Désolée mais je n'ai pas compris, merci de reformuler votre demande.");
             }
         }
-    }//modifier avec : matchNum/matchEmail/ etc
     
 
     public static void main(String[] args) throws GeneralSecurityException, IOException{
