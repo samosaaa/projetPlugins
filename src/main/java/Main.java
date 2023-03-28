@@ -9,25 +9,30 @@ public class Main{
             System.out.println("Comment puis-je vous aider ? ");
             String input = sc.nextLine();
 
-            if (PeopleQuickstart.isContact(input)){ // verifie s'il s'agit d'une question de COntact
-                if(PeopleQuickstart.matchNumber(input)){
-                    PeopleQuickstart.answerContactNumberRequest(input);
-                }
-                else if(PeopleQuickstart.matchBirthdate(input)){
-                    PeopleQuickstart.answerContactBirthdateRequest(input);
-                }
-                else if(PeopleQuickstart.matchEmail(input)){
-                    PeopleQuickstart.answerContactEmailRequest(input);
-                }
-                else  {
-                    if(PeopleQuickstart.matchAdress(input)){
-                        PeopleQuickstart.answerContactAdressRequest(input);
+            // Create dependencies
+            ConsoleLogger consoleLogger = new ConsoleLogger();
+
+                
+                if (PeopleQuickstart.isContact(input)){ // verifie s'il s'agit d'une question de COntact
+                    if(PeopleQuickstart.matchNumber(input)){
+                        PeopleQuickstart.answerContactNumberRequest(input);
                     }
-                } 
-            }
-            else{
-                System.out.println("Désolée mais je n'ai pas compris, merci de reformuler votre demande.");
-            }
+                    else if(PeopleQuickstart.matchBirthdate(input)){
+                        PeopleQuickstart.answerContactBirthdateRequest(input);
+                    }
+                    else if(PeopleQuickstart.matchEmail(input)){
+                        PeopleQuickstart.answerContactEmailRequest(input);
+                    }
+                    else  {
+                        if(PeopleQuickstart.matchAdress(input)){
+                            PeopleQuickstart.answerContactAdressRequest(input);
+                        }
+                    } 
+                } else {
+                    System.out.println("Désolée mais je n'ai pas compris, merci de reformuler votre demande.");
+                }
+            
+            
         }
     }
     

@@ -91,19 +91,8 @@ public class PeopleQuickstart {
     return null;
   }
 
-  /* TO DELETE
-  public static boolean matchContact(String input) throws GeneralSecurityException, IOException { 
 
-    Pattern regexContact = Pattern.compile("\\b(|né|naissance|âge|age|née|nee|Mail|Email|Mèl|Mel)\\b",
-        Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE | Pattern.CANON_EQ);
-    Matcher matchContact = regexContact.matcher("(?iu)" + input);
-    if (matchContact.find()) {
-      return true;
-    } else {
-      return false;
-    }
-  } */
-
+  
   public static boolean isContact(String input) throws GeneralSecurityException, IOException {
     Person contact = compareNames(input);
     if (contact == null) {
@@ -113,15 +102,6 @@ public class PeopleQuickstart {
       return true;
     }
   }
-  
-  /* TO DELETE
-  public static boolean verifyContactExist(Person contact) {
-    if (contact == null) {
-      return false;
-    } else {
-      return true;
-    }
-  } */
 
   public static boolean matchNumber(String input) throws GeneralSecurityException, IOException {
       Pattern regexNumContact = Pattern.compile("\\b(numero|num|tel|fix|contacter|contacte)\\b",
@@ -156,11 +136,12 @@ public class PeopleQuickstart {
   public static void answerContactEmailRequest(String input) throws GeneralSecurityException, IOException{
     Person contact = compareNames(input);
     if (contact.getEmailAddresses() != null) { //si le contact en question possède un mail 
-      System.out.println("L\'adresse Email de " + contact.getNames().get(0).getDisplayName() + " est "
+      ConsoleLogger.writeInfo("L\'adresse Email de " + contact.getNames().get(0).getDisplayName() + " est "
       + contact.getEmailAddresses().get(0).getValue());
+      //System.out.println("L\'adresse Email de " + contact.getNames().get(0).getDisplayName() + " est " + contact.getEmailAddresses().get(0).getValue());
     } else { // sinon
-      System.out
-      .println("L\'adresse Email de " + contact.getNames().get(0).getDisplayName() + " n'est pas renseignée.");
+      ConsoleLogger.writeInfo("L\'adresse Email de " + contact.getNames().get(0).getDisplayName() + " n'est pas renseignée.");
+      //System.out.println("L\'adresse Email de " + contact.getNames().get(0).getDisplayName() + " n'est pas renseignée.");
     }
   }
 
@@ -177,10 +158,12 @@ public class PeopleQuickstart {
   public static void answerContactAdressRequest(String input) throws GeneralSecurityException, IOException{
     Person contact = compareNames(input);
     if (contact.getAddresses() != null) { //si le contact en question possède un email 
-      System.out.println("L\'adresse de " + contact.getNames().get(0).getDisplayName() + " est "
+      ConsoleLogger.writeInfo("L\'adresse de " + contact.getNames().get(0).getDisplayName() + " est "
       + contact.getAddresses().get(0).getFormattedValue());
+      //System.out.println("L\'adresse de " + contact.getNames().get(0).getDisplayName() + " est " + contact.getAddresses().get(0).getFormattedValue());
     } else { // sinon
-      System.out.println("L\'adresse de " + contact.getNames().get(0).getDisplayName() + " n'est pas renseignée.");
+      ConsoleLogger.writeInfo("L\'adresse de " + contact.getNames().get(0).getDisplayName() + " n'est pas renseignée.");
+      //System.out.println("L\'adresse de " + contact.getNames().get(0).getDisplayName() + " n'est pas renseignée.");
     }
   }
 
@@ -198,9 +181,11 @@ public class PeopleQuickstart {
   public static void answerContactBirthdateRequest(String input) throws GeneralSecurityException, IOException{
     Person contact = compareNames(input);
     if (contact.getBirthdays() != null) { //si le contact en question possède une date de naissance 
-      System.out.println(contact.getNames().get(0).getDisplayName() + " est né.e le " + contact.getBirthdays().get(0).getText());
+      ConsoleLogger.writeInfo(contact.getNames().get(0).getDisplayName() + " est né.e le " + contact.getBirthdays().get(0).getText());
+      //System.out.println(contact.getNames().get(0).getDisplayName() + " est né.e le " + contact.getBirthdays().get(0).getText());
     } else { // sinon
-      System.out.println("La date de naissance de " + contact.getNames().get(0).getDisplayName() + " n'est pas renseignée.");
+      ConsoleLogger.writeInfo("La date de naissance de " + contact.getNames().get(0).getDisplayName() + " n'est pas renseignée.");
+      //System.out.println("La date de naissance de " + contact.getNames().get(0).getDisplayName() + " n'est pas renseignée.");
     }
   }
 
