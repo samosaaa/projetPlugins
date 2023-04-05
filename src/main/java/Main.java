@@ -2,6 +2,8 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.Scanner;
 
+import com.google.api.services.people.v1.model.Person;
+
 public class Main{
 
     public static void findPlugin() throws GeneralSecurityException, IOException{
@@ -9,19 +11,20 @@ public class Main{
             System.out.println("Comment puis-je vous aider ? ");
             String input = sc.nextLine();
 
-            if (PeopleQuickstart.isContact(input)){ // verifie s'il s'agit d'une question de COntact
-                if(PeopleQuickstart.matchNumber(input)){
-                    PeopleQuickstart.answerContactNumberRequest(input);
+            if (ContactFunction.isContact(input)){ // verifie s'il s'agit d'une question de COntact
+            Person CONTACT = PeopleQuickstart.findContact(input);
+                if(ContactFunction.matchNumber(input)){
+                    System.out.println(ContactFunction.numberTString(CONTACT));
                 }
-                else if(PeopleQuickstart.matchBirthdate(input)){
-                    PeopleQuickstart.answerContactBirthdateRequest(input);
+                else if(ContactFunction.matchBirth(input)){
+                    ContactFunction.birthdayToString(CONTACT);
                 }
-                else if(PeopleQuickstart.matchEmail(input)){
-                    PeopleQuickstart.answerContactEmailRequest(input);
+                else if(ContactFunction.matchEmail(input)){
+                    ContactFunction.emailToString(CONTACT);
                 }
                 else  {
-                    if(PeopleQuickstart.matchAdress(input)){
-                        PeopleQuickstart.answerContactAdressRequest(input);
+                    if(ContactFunction.matchAddress(input)){
+                        ContactFunction.addressToString(CONTACT);
                     }
                 } 
             }

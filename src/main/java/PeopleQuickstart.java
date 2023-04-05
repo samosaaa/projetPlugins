@@ -62,11 +62,12 @@ public class PeopleQuickstart {
     return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
   }
 
-  public static List<Person> getConnections() throws GeneralSecurityException, IOException {
-    final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-    PeopleService service = new PeopleService.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
-        .setApplicationName(APPLICATION_NAME)
-        .build();
+public static List<Person> getConnections() throws GeneralSecurityException, IOException{
+  final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+    PeopleService service =
+        new PeopleService.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
+            .setApplicationName(APPLICATION_NAME)
+            .build();
     ListConnectionsResponse response = service.people().connections()
         .list("people/me")
         .setPageSize(10)
@@ -74,218 +75,31 @@ public class PeopleQuickstart {
         .execute();
     List<Person> connections = response.getConnections();
     return connections;
-  }
+}
 
-  public static Person compareNames(String input) throws GeneralSecurityException, IOException {
+public static Person findContact(String input) throws GeneralSecurityException, IOException{
 
-    List<Person> connections = getConnections();
+  List<Person> connections = getConnections();
 
-    String[] ContactRequest = input.split(" ");
-    for (int i = 0; i < ContactRequest.length; i++) {
-      for (Person contact : connections) {
-        if (ContactRequest[i].equals(contact.getNames().get(0).getDisplayName())) {
-          return contact;
-        }
+  String[] ContactRequest = input.split(" ");
+  for(int i = 0; i < ContactRequest.length; i++){
+    for(Person contact : connections){
+      if(ContactRequest[i].equals(contact.getNames().get(0).getDisplayName())){
+        return contact;
       }
     }
-    return null;
   }
+  return null;
+}
 
-  /* TO DELETE
-  public static boolean matchContact(String input) throws GeneralSecurityException, IOException { 
-
-    Pattern regexContact = Pattern.compile("\\b(|né|naissance|âge|age|née|nee|Mail|Email|Mèl|Mel)\\b",
-        Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE | Pattern.CANON_EQ);
-    Matcher matchContact = regexContact.matcher("(?iu)" + input);
-    if (matchContact.find()) {
-      return true;
-    } else {
-      return false;
-    }
-  } */
-
-  public static boolean isContact(String input) throws GeneralSecurityException, IOException {
-    Person contact = compareNames(input);
-    if (contact == null) {
-      System.out.println("Je n'ai pas trouvé le contact dont vous parlez."); // write(error)
-      return false;
-    } else {
-      return true;
-    }
-  }
-  
-  /* TO DELETE
-  public static boolean verifyContactExist(Person contact) {
-    if (contact == null) {
-      return false;
-    } else {
-      return true;
-    }
-  } */
-
-  public static boolean matchNumber(String input) throws GeneralSecurityException, IOException {
-      Pattern regexNumContact = Pattern.compile("\\b(numero|num|tel|fix|contacter|contacte)\\b",
-          Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE | Pattern.CANON_EQ);
-      Matcher matchNumContact = regexNumContact.matcher("(?iu)" + input);
-      if (matchNumContact.find()) { //si la question correspond a une recherche de numero
-        return true;       
-      } 
-    return false;
-  }
-
-  public static void answerContactNumberRequest(String input) throws GeneralSecurityException, IOException{
-    Person contact = compareNames(input);
-    if (contact.getPhoneNumbers() != null) { //si le contact en question possède un numéro 
-      System.out.println("Le numéro de téléphone de " + contact.getNames().get(0).getDisplayName() + " est "
-          + contact.getPhoneNumbers().get(0).getValue());
-    } else { // sinon
-      System.out.println("Le numéro de " + contact.getNames().get(0).getDisplayName() + " n'est pas renseigné.");
-    }
-  }
-
-  public static boolean matchEmail(String input) throws GeneralSecurityException, IOException {
-      Pattern regexMailContact = Pattern.compile("\\b(Mail|Email|Mèl|Mel)\\b",
-          Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE | Pattern.CANON_EQ);
-      Matcher matchMailContact = regexMailContact.matcher("(?iu)" + input);
-      if (matchMailContact.find())  { //si la question correspond a une recherche d'un mail
-        return true;       
-      } 
-    return false;
-  }
-
-  public static void answerContactEmailRequest(String input) throws GeneralSecurityException, IOException{
-    Person contact = compareNames(input);
-    if (contact.getEmailAddresses() != null) { //si le contact en question possède un mail 
-      System.out.println("L\'adresse Email de " + contact.getNames().get(0).getDisplayName() + " est "
-      + contact.getEmailAddresses().get(0).getValue());
-    } else { // sinon
-      System.out
-      .println("L\'adresse Email de " + contact.getNames().get(0).getDisplayName() + " n'est pas renseignée.");
-    }
-  }
-
-  public static boolean matchAdress(String input) throws GeneralSecurityException, IOException {
-      Pattern regexAdressContact = Pattern.compile("\\b(adresse|habite|maison)\\b",
-          Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE | Pattern.CANON_EQ);
-      Matcher matchAdressContact = regexAdressContact.matcher("(?iu)" + input);
-      if (matchAdressContact.find())  { //si la question correspond a une recherche d'un email
-        return true;       
-      } 
-    return false;
-  }
-
-  public static void answerContactAdressRequest(String input) throws GeneralSecurityException, IOException{
-    Person contact = compareNames(input);
-    if (contact.getAddresses() != null) { //si le contact en question possède un email 
-      System.out.println("L\'adresse de " + contact.getNames().get(0).getDisplayName() + " est "
-      + contact.getAddresses().get(0).getFormattedValue());
-    } else { // sinon
-      System.out.println("L\'adresse de " + contact.getNames().get(0).getDisplayName() + " n'est pas renseignée.");
-    }
-  }
-
-  public static boolean matchBirthdate(String input) throws GeneralSecurityException, IOException {
-      Pattern regexAgeContact = Pattern.compile("\\b(né|naissance|âge|age|née|nee)\\b",
-          Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE | Pattern.CANON_EQ);
-      Matcher matchAgeContact = regexAgeContact.matcher("(?iu)" + input);
-      if (matchAgeContact.find())  { //si la question correspond a une recherche d'une date de naissance
-        return true;       
-      } 
-    return false;
-  }
-
-
-  public static void answerContactBirthdateRequest(String input) throws GeneralSecurityException, IOException{
-    Person contact = compareNames(input);
-    if (contact.getBirthdays() != null) { //si le contact en question possède une date de naissance 
-      System.out.println(contact.getNames().get(0).getDisplayName() + " est né.e le " + contact.getBirthdays().get(0).getText());
-    } else { // sinon
-      System.out.println("La date de naissance de " + contact.getNames().get(0).getDisplayName() + " n'est pas renseignée.");
-    }
-  }
-
-
-
-  /*
-   * public static void answerContactRequest(String input) throws
-   * GeneralSecurityException, IOException{
-   * Person contact = compareNames(input);
-   * if(contact == null){
-   * System.out.println("Je n'ai pas trouvé le contact dont vous parlez."); //
-   * write(error)
-   * return;
-   * }
-   * Pattern regexAgeContact =
-   * Pattern.compile("\\b(né|naissance|âge|age|née|nee)\\b",
-   * Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE | Pattern.CANON_EQ);
-   * Matcher matchAgeContact = regexAgeContact.matcher("(?iu)" + input);
-   * 
-   * Pattern regexMailContact = Pattern.compile("\\b(Mail|Email|Mèl|Mel)\\b",
-   * Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE | Pattern.CANON_EQ);
-   * Matcher matchMailContact = regexMailContact.matcher("(?iu)" + input);
-   * 
-   * Pattern regexNumContact =
-   * Pattern.compile("\\b(numero|num|tel|fix|contacter|contacte)\\b",
-   * Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE | Pattern.CANON_EQ);
-   * Matcher matchNumContact = regexNumContact.matcher("(?iu)" + input);
-   * 
-   * Pattern regexAdressContact = Pattern.compile("\\b(adresse|habite|maison)\\b",
-   * Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE | Pattern.CANON_EQ);
-   * Matcher matchAdressContact = regexAdressContact.matcher("(?iu)" + input);
-   * 
-   * 
-   * if (matchAgeContact.find()) {
-   * if(contact.getBirthdays() != null ){
-   * System.out.println(contact.getNames().get(0).getDisplayName() +
-   * " est né.e le " + contact.getBirthdays().get(0).getText());
-   * }
-   * else{
-   * System.out.println("La date de naissance de " +
-   * contact.getNames().get(0).getDisplayName() + " n'est pas renseignée.");
-   * }
-   * }
-   * else if(matchMailContact.find()){
-   * if(contact.getEmailAddresses() != null){
-   * System.out.println("L\'adresse Email de " +
-   * contact.getNames().get(0).getDisplayName() + " est " +
-   * contact.getEmailAddresses().get(0).getValue());
-   * }
-   * else{
-   * System.out.println("L\'adresse Email de " +
-   * contact.getNames().get(0).getDisplayName() + " n'est pas renseignée.");
-   * }
-   * }
-   * else if(matchNumContact.find()){
-   * if(contact.getPhoneNumbers() != null){
-   * System.out.println("Le numéro de téléphone de " +
-   * contact.getNames().get(0).getDisplayName() + " est " +
-   * contact.getPhoneNumbers().get(0).getValue());
-   * }
-   * else{
-   * System.out.println("Le numéro de " +
-   * contact.getNames().get(0).getDisplayName() + " n'est pas renseigné.");
-   * }
-   * }
-   * else if(matchAdressContact.find()){
-   * if(contact.getAddresses() != null){
-   * System.out.println("L\'adresse de " +
-   * contact.getNames().get(0).getDisplayName() + " est " +
-   * contact.getAddresses().get(0).getFormattedValue());
-   * }
-   * else{
-   * System.out.println("L\'adresse de " +
-   * contact.getNames().get(0).getDisplayName() + " n'est pas renseignée.");
-   * }
-   * }
-   * }
-   */
 
   public static void main(String... args) throws IOException, GeneralSecurityException {
     // Build a new authorized API client service.
     final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-    PeopleService service = new PeopleService.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
-        .setApplicationName(APPLICATION_NAME)
-        .build();
+    PeopleService service =
+        new PeopleService.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
+            .setApplicationName(APPLICATION_NAME)
+            .build();
 
     // Request 10 connections.
     ListConnectionsResponse response = service.people().connections()
@@ -310,6 +124,5 @@ public class PeopleQuickstart {
       System.out.println("No connections found.");
     }
   }
-
-
 }
+
