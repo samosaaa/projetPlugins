@@ -4,10 +4,6 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.google.api.services.people.v1.PeopleService;
-import com.google.api.services.people.v1.model.ListConnectionsResponse;
-import com.google.api.services.people.v1.model.Person;
-
 public class Main{
 
     public static List<String> matchContact(String input){
