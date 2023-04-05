@@ -21,8 +21,6 @@ import java.io.InputStreamReader;
 import java.security.GeneralSecurityException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class PeopleQuickstart {
   private static final String APPLICATION_NAME = "Google People API Java Quickstart";
