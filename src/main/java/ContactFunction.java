@@ -1,13 +1,14 @@
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.regex.Matcher;
-import com.google.api.services.people.v1.model.Person;
 
 
 public class ContactFunction {
 
+    private ContactFunction(){}
+
     public static boolean isContact(String input) throws GeneralSecurityException, IOException{
-        Matcher matchContact = Regex.CONTACT_REGEX.matcher("(?iu)" + input);
+        Matcher matchContact = Regex.getContactPattern().matcher(input);
         if (matchContact.find()) {
             return true;
         }else {
@@ -17,47 +18,33 @@ public class ContactFunction {
 
 
     public static boolean matchNumber(String input) {
-        Matcher matchNumContact = Regex.NUMBER_REGEX.matcher("(?iu)" + input);
+        Matcher matchNumContact = Regex.getNumPattern().matcher(input);
         if(matchNumContact.find()){
             return true;
         }
         return false;
     }
 
-    public static String numberTString(Person contact){
-        return contact.getPhoneNumbers().get(0).getValue();
-    }
-
     public static boolean matchEmail(String input) {
-        Matcher matchEMailContact = Regex.EMAIL_REGEX.matcher("(?iu)" + input);
+        Matcher matchEMailContact = Regex.getEmailPattern().matcher(input);
         if(matchEMailContact.find()){
             return true;
         }
         return false;
     }
 
-    public static String emailToString(Person contact){
-        return contact.getEmailAddresses().get(0).getValue();
-    }
 
     public static boolean matchAddress(String input) {
-        Matcher matchAddressContact = Regex.ADDRESS_REGEX.matcher("(?iu)" + input);
+        Matcher matchAddressContact = Regex.getAddressPattern().matcher(input);
         if(matchAddressContact.find()){
             return true;
         }
         return false;
     }
 
-    public static String addressToString(Person contact){
-        return contact.getAddresses().get(0).getFormattedValue();
-    }
-
-    public static String birthdayToString(Person contact){
-        return contact.getBirthdays().get(0).getText();
-    }
 
     public static boolean matchBirth(String input) {
-        Matcher matchBirthContact = Regex.BIRTH_REGEX.matcher("(?iu)" + input);
+        Matcher matchBirthContact = Regex.getBirthdayPattern().matcher(input);
         if(matchBirthContact.find()){
             return true;
         }
