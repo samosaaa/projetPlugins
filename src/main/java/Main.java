@@ -14,7 +14,7 @@ public class Main{
             if (ContactFunction.isContact(input)){ // verifie s'il s'agit d'une question de COntact
             Person CONTACT = PeopleQuickstart.findContact(input);
                 if(ContactFunction.matchNumber(input)){
-                    System.out.println(InfoContact.numberTString(CONTACT));
+                    System.out.println(InfoContact.numberToString(CONTACT));
                 }
                 else if(ContactFunction.matchBirth(input)){
                     InfoContact.birthdayToString(CONTACT);
