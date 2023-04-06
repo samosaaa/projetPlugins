@@ -1,4 +1,4 @@
-package Contact;
+package Controller;
 
 import java.util.regex.Pattern;
 

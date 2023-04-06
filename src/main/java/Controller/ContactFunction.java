@@ -1,4 +1,4 @@
-package Contact;
+package Controller;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
