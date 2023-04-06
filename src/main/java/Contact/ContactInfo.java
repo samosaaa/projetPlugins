@@ -1,8 +1,9 @@
+package Contact;
 import com.google.api.services.people.v1.model.Person;
 
-public class InfoContact{
+public class ContactInfo{
 
-    private InfoContact(){}
+    private ContactInfo(){}
 
     public static String numberToString(Person contact){
         return contact.getPhoneNumbers().get(0).getValue();
