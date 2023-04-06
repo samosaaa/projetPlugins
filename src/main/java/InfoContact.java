@@ -4,7 +4,7 @@ public class InfoContact{
 
     private InfoContact(){}
 
-    public static String numberTString(Person contact){
+    public static String numberToString(Person contact){
         return contact.getPhoneNumbers().get(0).getValue();
     }
 
