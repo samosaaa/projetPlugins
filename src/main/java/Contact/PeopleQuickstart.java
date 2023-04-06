@@ -90,7 +90,8 @@ public static Person findContact(String input) throws GeneralSecurityException, 
   }
   return null;
 }
-
+// separer findcontact dans une class contact ?
+//people donne la donnée, controller recupe phrase, contactController recupere la données dan sle model de donnée
 
   public static void main(String... args) throws IOException, GeneralSecurityException {
     // Build a new authorized API client service.
