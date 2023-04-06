@@ -1,8 +1,10 @@
+package Contact;
+
 import java.util.regex.Pattern;
 
-public class Regex {
+public class ContactRegex {
 
-    private Regex(){}
+    private ContactRegex(){}
 
     private static Pattern CONTACT_REGEX = Pattern.compile("\\b(|né|naissance|âge|age|née|nee|Mail|Email|Mèl|Mel|Contact)\\b", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE |  Pattern.CANON_EQ);
     private static Pattern NUMBER_REGEX = Pattern.compile("\\b(numero|num|tel|fix|contacter|contacte)\\b", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE |  Pattern.CANON_EQ);

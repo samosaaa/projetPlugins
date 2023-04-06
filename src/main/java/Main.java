@@ -4,6 +4,10 @@ import java.util.Scanner;
 
 import com.google.api.services.people.v1.model.Person;
 
+import Contact.ContactFunction;
+import Contact.ContactInfo;
+import Contact.PeopleQuickstart;
+
 public class Main{
 
     public static void findPlugin() throws GeneralSecurityException, IOException{
@@ -18,16 +22,16 @@ public class Main{
                     }
                     else{
                         if(ContactFunction.matchNumber(input)){
-                            System.out.println(InfoContact.numberToString(CONTACT));
+                            System.out.println(ContactInfo.numberToString(CONTACT));
                         }
                         else if(ContactFunction.matchBirth(input)){
-                            InfoContact.birthdayToString(CONTACT);
+                            ContactInfo.birthdayToString(CONTACT);
                         }
                         else if(ContactFunction.matchEmail(input)){
-                            InfoContact.emailToString(CONTACT);
+                            ContactInfo.emailToString(CONTACT);
                         }
                         else if(ContactFunction.matchAddress(input)){
-                            InfoContact.addressToString(CONTACT);
+                            ContactInfo.addressToString(CONTACT);
                         }
                         
                     }
