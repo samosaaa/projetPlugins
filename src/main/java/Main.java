@@ -13,21 +13,26 @@ public class Main{
 
             if (ContactFunction.isContact(input)){ // verifie s'il s'agit d'une question de COntact
             Person CONTACT = PeopleQuickstart.findContact(input);
-                if(ContactFunction.matchNumber(input)){
-                    System.out.println(InfoContact.numberTString(CONTACT));
+                if(CONTACT == null){
+                    System.out.println("Je n'ai pas trouvé la personne dont vous parlez parmis vos contacts.");
                 }
-                else if(ContactFunction.matchBirth(input)){
-                    InfoContact.birthdayToString(CONTACT);
-                }
-                else if(ContactFunction.matchEmail(input)){
-                    InfoContact.emailToString(CONTACT);
-                }
-                else  {
-                    if(ContactFunction.matchAddress(input)){
-                        InfoContact.addressToString(CONTACT);
+                else{
+                    if(ContactFunction.matchNumber(input)){
+                        System.out.println(InfoContact.numberToString(CONTACT));
                     }
-                } 
-            }
+                    else if(ContactFunction.matchBirth(input)){
+                        InfoContact.birthdayToString(CONTACT);
+                    }
+                    else if(ContactFunction.matchEmail(input)){
+                        InfoContact.emailToString(CONTACT);
+                    }
+                    else  {
+                        if(ContactFunction.matchAddress(input)){
+                            InfoContact.addressToString(CONTACT);
+                        }
+                    } 
+                }
+            }    
             else{
                 System.out.println("Désolée mais je n'ai pas compris, merci de reformuler votre demande.");
             }

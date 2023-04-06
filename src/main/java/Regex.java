@@ -1,6 +1,7 @@
 import java.util.regex.Pattern;
 
 public class Regex {
+
     private Regex(){}
 
     private static Pattern CONTACT_REGEX = Pattern.compile("\\b(|né|naissance|âge|age|née|nee|Mail|Email|Mèl|Mel|Contact)\\b", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE |  Pattern.CANON_EQ);
