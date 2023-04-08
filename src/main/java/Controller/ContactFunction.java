@@ -1,7 +1,5 @@
-package Contact;
+package Controller;
 
-import java.io.IOException;
-import java.security.GeneralSecurityException;
 import java.util.regex.Matcher;
 
 
@@ -9,7 +7,7 @@ public class ContactFunction {
 
     private ContactFunction(){}
 
-    public static boolean isContact(String input) throws GeneralSecurityException, IOException{
+    public static boolean isContact(String input){
         Matcher matchContact = ContactRegex.getContactPattern().matcher(input);
         return matchContact.find();
     }
