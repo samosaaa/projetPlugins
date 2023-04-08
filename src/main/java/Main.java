@@ -25,13 +25,13 @@ public class Main{
                             System.out.println(ContactInfo.numberToString(CONTACT));
                         }
                         else if(ContactFunction.matchBirth(input)){
-                            ContactInfo.birthdayToString(CONTACT);
+                            System.out.println(ContactInfo.birthdayToString(CONTACT));
                         }
                         else if(ContactFunction.matchEmail(input)){
-                            ContactInfo.emailToString(CONTACT);
+                            System.out.println(ContactInfo.emailToString(CONTACT));
                         }
                         else if(ContactFunction.matchAddress(input)){
-                            ContactInfo.addressToString(CONTACT);
+                            System.out.println(ContactInfo.addressToString(CONTACT));
                         }
                         
                     }
