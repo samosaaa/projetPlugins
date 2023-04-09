@@ -11,6 +11,7 @@ import com.google.api.client.util.DateTime;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.CalendarScopes;
+
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
 
@@ -42,8 +43,8 @@ public class CalendarQuickstart {
    * If modifying these scopes, delete your previously saved tokens/ folder.
    */
   private static final List<String> SCOPES =
-      Collections.singletonList(CalendarScopes.CALENDAR_READONLY);
-  private static final String CREDENTIALS_FILE_PATH = "/credentials.json";
+      Collections.singletonList(CalendarScopes.CALENDAR);
+  private static final String CREDENTIALS_FILE_PATH = "resources/credentials-calender.json";
 
   /**
    * Creates an authorized Credential object.
@@ -69,10 +70,21 @@ public class CalendarQuickstart {
         .setAccessType("offline")
         .build();
     LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(8888).build();
-    Credential credential = new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
-    //returns an authorized Credential object.
-    return credential;
+    return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
+    
   }
+
+/////////////////////////////////////////////////////
+  public static List<Event> getEvents(String calendarId, int maxResults) throws IOException, GeneralSecurityException {
+    // Build a new authorized API client service.
+    final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
+    Calendar service = new Calendar.Builder(httpTransport, JSON_FACTORY, getCredentials(httpTransport))
+            .setApplicationName(APPLICATION_NAME).build();
+
+    // Retrieve the events from the calendar.
+    Events events = service.events().list(calendarId).setMaxResults(maxResults).execute();
+    return events.getItems();
+}/////////////////////////////////////////////////////
 
   public static void main(String... args) throws IOException, GeneralSecurityException {
     // Build a new authorized API client service.
