@@ -7,6 +7,6 @@ import com.google.api.services.people.v1.model.Person;
 
 public interface ContactModel {
 
-    public Person findPerson(String input) throws GeneralSecurityException, IOException;
+    public abstract Person findPerson(String input) throws GeneralSecurityException, IOException;
 
 }

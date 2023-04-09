@@ -1,6 +1,5 @@
 package Controller;
 
-
 import Model.Contact;
 import View.Print;
 
@@ -10,21 +9,15 @@ public class ContactController {
     
     
     public static void ContactManager(String input, Contact contact){
-            if(ContactFunction.matchNumber(input) && contact.getNumber() != null){
-                Print.write(contact.getNumber());
+
+        for(ContactFunction f : ContactFunction.functions){
+            ContactProcessor contactProcessor = new ContactProcessor(f);
+            if(contactProcessor.matchFunction(input) && contactProcessor.findGetter(contact) != null){
+                Print.write(contactProcessor.findGetter(contact));
+                return;
             }
-            else if(ContactFunction.matchBirth(input) && contact.getBirthday() != null){
-                Print.write(contact.getBirthday());
-            }
-            else if(ContactFunction.matchEmail(input) && contact.getEmail() != null){
-                Print.write(contact.getEmail());
-            }
-            else if(ContactFunction.matchAddress(input) && contact.getAddress() != null){
-                Print.write(contact.getAddress());
-            }
-            else{
-                Print.write("Je n'ai pas trouvé l'information que vous cherchez parmis vos contacts.");
-            }
-            
         }
+        Print.write("Je n'ai pas trouvé l'information que vous cherchez parmis vos contacts.");
     }
+            
+}

@@ -1,11 +1,22 @@
 package Controller;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 
+import Model.Contact;
 
-public class ContactFunction {
 
-    private ContactFunction(){}
+public abstract class ContactFunction {
+
+
+    protected ContactFunction(){}
+
+    static ArrayList<ContactFunction> functions = new ArrayList() {{
+        add(new ContactNumber());
+        add(new ContactEmail());
+        add(new ContactAddress());
+        add(new ContactBirthday());
+       }};
 
     public static boolean isContact(String input){
         Matcher matchContact = ContactRegex.getContactPattern().matcher(input);
@@ -13,25 +24,8 @@ public class ContactFunction {
     }
 
 
-    public static boolean matchNumber(String input) {
-        Matcher matchNumContact = ContactRegex.getNumPattern().matcher(input);
-        return matchNumContact.find();
-    }
-
-    public static boolean matchEmail(String input) {
-        Matcher matchEMailContact = ContactRegex.getEmailPattern().matcher(input);
-        return matchEMailContact.find();
-    }
+    protected abstract boolean match(String input);
+    protected abstract String get(Contact contact);
 
 
-    public static boolean matchAddress(String input) {
-        Matcher matchAddressContact = ContactRegex.getAddressPattern().matcher(input);
-        return matchAddressContact.find();
-    }
-
-
-    public static boolean matchBirth(String input) {
-        Matcher matchBirthContact = ContactRegex.getBirthdayPattern().matcher(input);
-        return matchBirthContact.find();
-    }
 }
