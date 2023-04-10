@@ -142,5 +142,11 @@ public static List<Person> getConnections() throws GeneralSecurityException, IOE
   }
   return null;
   }
+
+  @Override
+  public Contact toContact(Person person){
+    final Contact contact = new Contact(person);
+    return contact;
+  }
 }
 

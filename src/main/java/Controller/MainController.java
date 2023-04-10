@@ -18,11 +18,8 @@ public class MainController {
         }
     }
 
-    /*public Contact getContact(String input) throws GeneralSecurityException, IOException{
-        return new Contact(PeopleQuickstart.findPerson(input));
-    }*/
 
-    public static void findPlugin() throws GeneralSecurityException, IOException{
+    public static String findPlugin() throws GeneralSecurityException, IOException{
 
         String input = getInput();
 
@@ -36,5 +33,7 @@ public class MainController {
         else{
             Print.write("Désolée mais je n'ai pas compris, merci de reformuler votre demande.");
         }
+
+        return input;
 }
 }

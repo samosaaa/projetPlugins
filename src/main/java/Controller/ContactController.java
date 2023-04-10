@@ -6,7 +6,7 @@ import View.Print;
 public class ContactController {
 
     private ContactController(){}
-    
+
     
     public static void ContactManager(String input, Contact contact){
 

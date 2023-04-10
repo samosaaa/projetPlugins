@@ -27,5 +27,4 @@ public abstract class ContactFunction {
     protected abstract boolean match(String input);
     protected abstract String get(Contact contact);
 
-
 }
