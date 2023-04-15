@@ -30,6 +30,10 @@ public class MainController {
                 final Contact contact = ContactFunction.getContact(input);
                 ContactController.ContactManager(input, contact);
             }
+        }
+        else if(DictionnaryController.isDictionnary(input)){
+            DictionnaryController.DictionnaryManager(input);
+
         }    
         else{
             Print.write("Désolée mais je n'ai pas compris, merci de reformuler votre demande.");
