@@ -26,7 +26,6 @@ public class MainController {
         input = getInput();
 
         if (ContactFunction.isContact(input)){
-            System.out.println(ContactFunction.isContact(input));
              //interface + factory gestionnaire de contact qui a pqs en parametre
             if(PeopleQuickstart.findContact(input) != null){
                 final Contact contact = new Contact(PeopleQuickstart.findContact(input));
