@@ -1,5 +1,7 @@
 package Controller;
 
+import java.util.regex.Matcher;
+
 import Model.Contact;
 import View.Print;
 
@@ -7,6 +9,10 @@ public class ContactController {
 
     private ContactController(){}
 
+    public static boolean isContact(String input){
+        Matcher matchContact = ContactRegex.getContactPattern().matcher(input);
+        return matchContact.find();
+    }
     
     public static void ContactManager(String input, Contact contact){
 

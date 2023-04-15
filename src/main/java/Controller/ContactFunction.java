@@ -1,7 +1,6 @@
 package Controller;
 
 import java.util.ArrayList;
-import java.util.regex.Matcher;
 
 import Model.Contact;
 
@@ -17,11 +16,6 @@ public abstract class ContactFunction {
         add(new ContactAddress());
         add(new ContactBirthday());
        }};
-
-    public static boolean isContact(String input){
-        Matcher matchContact = ContactRegex.getContactPattern().matcher(input);
-        return matchContact.find();
-    }
 
 
     protected abstract boolean match(String input);
