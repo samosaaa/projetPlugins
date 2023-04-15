@@ -25,7 +25,12 @@ import java.security.GeneralSecurityException;
 import java.util.Arrays;
 import java.util.List;
 
-public class PeopleQuickstart implements ContactModel {
+public class PeopleQuickstart extends ContactModel {
+
+  public PeopleQuickstart(){
+    super();
+  }
+
   private static final String APPLICATION_NAME = "Google People API Java Quickstart";
   private static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
   private static final String TOKENS_DIRECTORY_PATH = "tokens";
@@ -129,24 +134,20 @@ public static List<Person> getConnections() throws GeneralSecurityException, IOE
   }
 
   @Override
-  public Person findPerson(String input) throws GeneralSecurityException, IOException {
+  public Contact findPerson(String input) throws GeneralSecurityException, IOException {
     List<Person> connections = getConnections();
 
-  String[] ContactRequest = input.split(" ");
-  for(int i = 0; i < ContactRequest.length; i++){
-    for(Person contact : connections){
-      if(ContactRequest[i].equals(contact.getNames().get(0).getDisplayName())){
-        return contact;
+    String[] ContactRequest = input.split(" ");
+    for(int i = 0; i < ContactRequest.length; i++){
+      for(Person contact : connections){
+        if(ContactRequest[i].equals(contact.getNames().get(0).getDisplayName())){
+          return new Contact(contact);
+        }
       }
     }
-  }
-  return null;
+    Print.write("Je n'ai pas trouvé la personne dont vous parlez parmis vos contacts.");
+    return null;
   }
 
-  @Override
-  public Contact toContact(Person person){
-    final Contact contact = new Contact(person);
-    return contact;
-  }
 }
 

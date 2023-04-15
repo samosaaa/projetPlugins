@@ -1,10 +1,9 @@
 package Controller;
+
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.Scanner;
-
 import Model.Contact;
-import Model.PeopleQuickstart;
 import View.Print;
 
 public class MainController {
@@ -27,8 +26,8 @@ public class MainController {
 
         if (ContactFunction.isContact(input)){
              //interface + factory gestionnaire de contact qui a pqs en parametre
-            if(PeopleQuickstart.findContact(input) != null){
-                final Contact contact = new Contact(PeopleQuickstart.findContact(input));
+            if(ContactFunction.getContact(input) != null){
+                final Contact contact = ContactFunction.getContact(input);
                 ContactController.ContactManager(input, contact);
             }
         }    
