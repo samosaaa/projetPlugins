@@ -9,6 +9,8 @@ import View.Print;
 
 public class MainController {
 
+    private static String input;
+
     private MainController(){}
 
     public static String getInput(){
@@ -21,9 +23,10 @@ public class MainController {
 
     public static String findPlugin() throws GeneralSecurityException, IOException{
 
-        String input = getInput();
+        input = getInput();
 
         if (ContactFunction.isContact(input)){
+            System.out.println(ContactFunction.isContact(input));
              //interface + factory gestionnaire de contact qui a pqs en parametre
             if(PeopleQuickstart.findContact(input) != null){
                 final Contact contact = new Contact(PeopleQuickstart.findContact(input));
