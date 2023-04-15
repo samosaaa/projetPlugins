@@ -118,21 +118,6 @@ public static List<Person> getConnections() throws GeneralSecurityException, IOE
     }
   }
 
-  public static Person findContact(String input) throws GeneralSecurityException, IOException {
-    List<Person> connections = getConnections();
-
-    String[] ContactRequest = input.split(" ");
-    for(int i = 0; i < ContactRequest.length; i++){
-      for(Person contact : connections){
-        if(ContactRequest[i].equals(contact.getNames().get(0).getDisplayName())){
-          return contact;
-        }
-      }
-    }
-    Print.write("Je n'ai pas trouvé la personne dont vous parlez parmis vos contacts.");
-    return null;
-  }
-
   @Override
   public Contact findPerson(String input) throws GeneralSecurityException, IOException {
     List<Person> connections = getConnections();
