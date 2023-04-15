@@ -1,18 +1,53 @@
+// Configuration du plugin Gradle pour Java et de l'application
 apply plugin: 'java'
 apply plugin: 'application'
 
+// Définition de la classe principale pour l'API Google People
 mainClassName = 'PeopleQuickstart'
+
+// Configuration de la compatibilité source et cible
 sourceCompatibility = 11
 targetCompatibility = 11
 
+// Définition du numéro de version de l'application
 version = '1.0'
 
+// Configuration du référentiel Maven Central
 repositories {
     mavenCentral()
 }
 
+// Définition des dépendances pour utiliser l'API Google People
 dependencies {
     implementation 'com.google.api-client:google-api-client:2.0.0'
     implementation 'com.google.oauth-client:google-oauth-client-jetty:1.34.1'
     implementation 'com.google.apis:google-api-services-people:v1-rev20220531-2.0.0'
 }
+
+
+// Configuration de la classe principale pour l'API Google Calendar
+apply plugin: 'java'
+apply plugin: 'application'
+
+mainClassName = 'CalendarQuickstart'
+
+// Configuration de la compatibilité source et cible
+sourceCompatibility = 11
+targetCompatibility = 11
+
+// Définition du numéro de version de l'application
+version = '1.0'
+
+// Configuration du référentiel Maven Central
+repositories {
+    mavenCentral()
+}
+
+// Définition des dépendances pour utiliser l'API Google Calendar
+dependencies {
+    implementation 'com.google.api-client:google-api-client:2.0.0'
+    implementation 'com.google.oauth-client:google-oauth-client-jetty:1.34.1'
+    implementation 'com.google.apis:google-api-services-calendar:v3-rev20220715-2.0.0'
+
+}
+
