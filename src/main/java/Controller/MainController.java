@@ -33,7 +33,6 @@ public class MainController {
         }
         else if(DictionnaryController.isDictionnary(input)){
             DictionnaryController.DictionnaryManager(input);
-
         }    
         else{
             Print.write("Désolée mais je n'ai pas compris, merci de reformuler votre demande.");
