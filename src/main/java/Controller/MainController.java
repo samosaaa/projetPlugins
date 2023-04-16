@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.Scanner;
 import Model.Contact;
+import Model.ContactModel;
+import Model.PeopleQuickstart;
 import View.Print;
 
 public class MainController {
@@ -17,6 +19,12 @@ public class MainController {
             Print.write("Bonjour, comment puis-je vous aider ? ");
             return sc.nextLine();
         }
+    }
+
+    public static Contact getContact(String input) throws GeneralSecurityException, IOException{
+        ContactModel cm = new PeopleQuickstart();
+        Contact contact = cm.findPerson(input);
+        return contact;
     }
 
 
