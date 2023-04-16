@@ -4,6 +4,11 @@ import java.util.Scanner;
 
 import com.google.api.services.people.v1.model.Person;
 
+import Controller.ContactFunction;
+import Controller.MainController;
+import Model.CalendarQuickstart;
+import Model.PeopleQuickstart;
+
 public class Main{
 
     public static void findPlugin() throws GeneralSecurityException, IOException{
@@ -63,6 +68,6 @@ public class Main{
         
     }
     public static void main(String[] args) throws GeneralSecurityException, IOException {
-        findPlugin();
+        MainController.findPlugin();
     }
 }
