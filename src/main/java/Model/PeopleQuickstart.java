@@ -1,4 +1,4 @@
-package Contact;
+package Model;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
@@ -15,6 +15,8 @@ import com.google.api.services.people.v1.model.ListConnectionsResponse;
 import com.google.api.services.people.v1.model.Name;
 import com.google.api.services.people.v1.model.Person;
 
+import View.Print;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,7 +25,12 @@ import java.security.GeneralSecurityException;
 import java.util.Arrays;
 import java.util.List;
 
-public class PeopleQuickstart {
+public class PeopleQuickstart extends ContactModel {
+
+  public PeopleQuickstart(){
+    super();
+  }
+
   private static final String APPLICATION_NAME = "Google People API Java Quickstart";
   private static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
   private static final String TOKENS_DIRECTORY_PATH = "tokens";
@@ -76,21 +83,8 @@ public static List<Person> getConnections() throws GeneralSecurityException, IOE
     return connections;
 }
 
-public static Person findContact(String input) throws GeneralSecurityException, IOException{
-
-  List<Person> connections = getConnections();
-
-  String[] ContactRequest = input.split(" ");
-  for(int i = 0; i < ContactRequest.length; i++){
-    for(Person contact : connections){
-      if(ContactRequest[i].equals(contact.getNames().get(0).getDisplayName())){
-        return contact;
-      }
-    }
-  }
-  return null;
-}
-
+// separer findcontact dans une class contact ?
+//people donne la donnée, controller recupe phrase, contactController recupere la données dan sle model de donnée
 
   public static void main(String... args) throws IOException, GeneralSecurityException {
     // Build a new authorized API client service.
@@ -123,5 +117,35 @@ public static Person findContact(String input) throws GeneralSecurityException, 
       System.out.println("No connections found.");
     }
   }
-}
 
+  public static Person findContact(String input) throws GeneralSecurityException, IOException {
+    List<Person> connections = getConnections();
+
+    String[] ContactRequest = input.split(" ");
+    for(int i = 0; i < ContactRequest.length; i++){
+      for(Person contact : connections){
+        if(ContactRequest[i].equals(contact.getNames().get(0).getDisplayName())){
+          return contact;
+        }
+      }
+    }
+    Print.write("Je n'ai pas trouvé la personne dont vous parlez parmis vos contacts.");
+    return null;
+  }
+
+  @Override
+  public Contact findPerson(String input) throws GeneralSecurityException, IOException {
+    List<Person> connections = getConnections();
+
+    String[] ContactRequest = input.split(" ");
+    for(int i = 0; i < ContactRequest.length; i++){
+      for(Person contact : connections){
+        if(ContactRequest[i].equals(contact.getNames().get(0).getDisplayName())){
+          return new Contact(contact);
+        }
+      }
+    }
+    Print.write("Je n'ai pas trouvé la personne dont vous parlez parmis vos contacts.");
+    return null;
+  }
+}

@@ -1,48 +1,11 @@
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.util.Scanner;
 
-import com.google.api.services.people.v1.model.Person;
-
-import Contact.ContactFunction;
-import Contact.ContactInfo;
-import Contact.PeopleQuickstart;
+import Controller.MainController;
 
 public class Main{
 
-    public static void findPlugin() throws GeneralSecurityException, IOException{
-            try (Scanner sc = new Scanner(System.in)) {
-                System.out.println("Bonjour, comment puis-je vous aider ? ");
-                String input = sc.nextLine();
-
-                if (ContactFunction.isContact(input)){ // verifie s'il s'agit d'une question de COntact
-                    Person CONTACT = PeopleQuickstart.findContact(input);
-                    if(CONTACT == null){
-                        System.out.println("Je n'ai pas trouvé la personne dont vous parlez parmis vos contacts.");
-                    }
-                    else{
-                        if(ContactFunction.matchNumber(input)){
-                            System.out.println(ContactInfo.numberToString(CONTACT));
-                        }
-                        else if(ContactFunction.matchBirth(input)){
-                            ContactInfo.birthdayToString(CONTACT);
-                        }
-                        else if(ContactFunction.matchEmail(input)){
-                            ContactInfo.emailToString(CONTACT);
-                        }
-                        else if(ContactFunction.matchAddress(input)){
-                            ContactInfo.addressToString(CONTACT);
-                        }
-                        
-                    }
-                }    
-                else{
-                    System.out.println("Désolée mais je n'ai pas compris, merci de reformuler votre demande.");
-                }
-            }
-        
-    }
     public static void main(String[] args) throws GeneralSecurityException, IOException {
-        findPlugin();
+        MainController.findPlugin();
     }
 }
